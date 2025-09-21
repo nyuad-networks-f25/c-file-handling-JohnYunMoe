@@ -55,3 +55,6 @@ dkms.conf
 *.dwo
 a.out 
 main
+
+# virtual environments
+venv

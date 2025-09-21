@@ -17,17 +17,16 @@ int main(int argc, char *argv[])
     // Skip the first 40 bytes (preamble)
     fseek(file, 40, SEEK_SET);
 
-    // Read the first record: Name[7B], id[2B], grade[1B]
+    // Read and print all records: Name[7B], id[2B], grade[1B]
     char name[7];
     unsigned char id[2];
     unsigned char grade;
 
-    fread(name, 1, 7, file); // skip name
-    fread(id, 1, 2, file);   // read id
-    fread(&grade, 1, 1, file); // read grade
-
-    // Print id and grade
-    printf("%u %u\n", (id[0] << 8) | id[1], grade);
+    while (fread(name, 1, 7, file) == 7 &&
+           fread(id, 1, 2, file) == 2 &&
+           fread(&grade, 1, 1, file) == 1) {
+        printf("id: %u, grade: %u\n", (id[0] << 8) | id[1], grade);
+    }
 
     fclose(file);
     return 0;
